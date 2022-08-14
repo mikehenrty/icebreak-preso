@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="dist/theme/sky.css">
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="plugin/highlight/vs2015.css">
 		<style>
 			@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap');
 			:root .reveal .slides {
@@ -163,6 +163,9 @@
 					<img style="display: inline-block; height:600px" src="static/Icebreak-arch.png" />
 				</section>
 				<section>
+					<img style="display: inline-block; height:600px" src="static/react-arch.png" />
+				</section>
+				<section>
 					<ul>
 						<li class="top">Why Server-sent Events?</li>
 						<li>Lightweight and simple <span class="small">(uses HTTP socket)</span></li>
@@ -171,6 +174,112 @@
 						<li>Full browser support <span class="small">(except IE 11)</span></li>
 						<li>Don't need full duplex <span class="small">(push is enough)</span></li>
 					</ul>
+				</section>
+				<section>
+					<div class="heading">Back-end</div>
+					<pre class="typescript">
+						<code data-line-numbers="1-6|9-20|23-32">
+							<script type="text/template">// Ex. server.ts
+type Clients = Map<ClientId, ExpressResponse>;
+type Rooms = Map<RoomId, Clients>;
+
+const rooms: Rooms = new Map();
+const app = express();
+
+
+// Middleware handler for joining a room.
+app.get('/join/:roomId', (req, res) => {
+	const {roomId, clientId} = getParams(req);
+
+	let room = rooms.get(roomId);
+  if (!room) {
+    room = new Map();
+    rooms.set(roomId, room);
+  }
+
+  room.set(clientId, res);
+});
+
+
+// Called every time we update Room data.
+function sendRoomUpdate(room: RoomEntity) {
+	const clients = rooms.get(room.id);
+
+	// Send room data to every client in room.
+	for (let [roomId, res] of clients) {
+		const update = getSSEStr(room);
+		res.write(update);
+	}
+}
+
+						</script>
+					</code>
+				</pre>
+				</section>
+				<section>
+					<div class="heading">Front-end</div>
+					<pre class="typescript">
+						<code data-line-numbers="1-6|8-11|15-16|20-21|30|34-36|39-52">
+							<script type="text/template">// Ex. hooks.ts
+type HookResult<T> = [
+	boolean, // isLoading
+	string,  // errorMessage
+	T | null // apiResponse
+];
+
+function useRoomData(roomId: string): HookResult<Room> {
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string | null>(null);
+	const [roomData, setRoomData] = useState<RoomResult | null>(null);
+	
+	React.useEffect(() => {
+		setIsLoading(true);
+		const evtSource = new EventSource(`/join/${roomId}`);
+		evtSource.addEventListener('update', (evt: MessageEvent) => {
+			setError(null);
+			setIsLoading(false);
+			try {
+				const result = JSON.parse(evt.data);
+				setRoomData(result);
+			} catch (e) {
+				setError('Unable to process room update');
+			}
+		});
+	
+		return cleanUpEvtSource();
+	});
+
+	return [loading, error, roomData];
+}
+
+
+// Room.tsx
+const Room = ({ user, roomId }: RoomProps) => {
+  const [loading, error, roomData] = useRoomData(roomId);
+
+	return (
+    <div className='roomContainer'>
+      {error && (
+				<div className='error'><span>{error}</span></div>
+			)}
+      {loading && (
+				<div className='loadingSpinner'></div>
+			)}
+      {roomData && user.isHost && (
+        <HostRoom roomData={roomData} />
+      )}
+      {roomData && !user.isHost && (
+        <PlayerRoom roomData={roomData} user={user} />
+      )}
+    </div>
+	);
+
+							</script>
+						</code>
+					</pre>
+				</section>
+				<section>
+					<img style="display: inline-block; height:600px" src="static/Icebreak-arch.png" />
 				</section>
 			</div>
 		</div>
