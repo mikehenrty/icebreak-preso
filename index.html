@@ -4,19 +4,45 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Michael Henretty - Code</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/solarized.css">
+		<link rel="stylesheet" href="dist/theme/sky.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+			:root .reveal .slides {
+				--r-main-font: 'Work Sans', sans-serif;
+				--r-heading-font: 'Work Sans', sans-serif;
+				font-family: 'Work Sans', sans-serif;
+			}
+
+			.heading {
+				font-size: 200%;
+				font-weight: bold;
+			}
+
+			.normal {
+				text-align: left;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
+				<section>
+					<div class="heading">Michael Henretty</div>
+					<sub>Coding Case Study</sub>
+				</section>
+				<section>
+					<div class="normal">
+						<div>Prompt</div>
+						<div>to present the business challenge/ask, what you worked on, how you + the team accomplished your goals, all while focusing on the FS/UI components</div>
+					</div>
+				</section>
 				<section>
 						<video controls onloadstart="this.playbackRate = 2.5">
 							<source src="static/icebreak-demo.webm" type="video/webm" />
