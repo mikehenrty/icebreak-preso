@@ -13,20 +13,59 @@
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 		<style>
-			@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap');
 			:root .reveal .slides {
-				--r-main-font: 'Work Sans', sans-serif;
-				--r-heading-font: 'Work Sans', sans-serif;
-				font-family: 'Work Sans', sans-serif;
+				--r-main-font: 'Lato', sans-serif;
+				--r-heading-font: 'Lato', sans-serif;
+				font-family: 'Lato', sans-serif;
 			}
 
-			.heading {
+			.mytitle {
 				font-size: 200%;
 				font-weight: bold;
 			}
 
+			.heading {
+				font-size: 160%;
+				font-weight: bold;
+				margin-bottom: 40px;
+				text-align: left;
+			}
+
 			.normal {
 				text-align: left;
+				margin: 0 30px;
+			}
+
+			.small {
+				font-size: 50%;
+			}
+
+			.quote {
+				border: 1px solid black;
+				border-radius: 20px;
+				background-color: white;
+				margin: 10px 0;
+				padding: 30px;
+			}
+
+			li.top {
+				font-size: 160%;
+				font-weight: bolder;
+				margin-bottom: 30px;
+				list-style-type: none;
+			}
+
+			.reveal .slides b {
+				font-size: 110%;
+				font-weight: 900;
+			}
+
+			.reveal .slides i {
+				font-style: italic;
+			}
+			.reveal .slides li:not(:first-child) {
+				margin-top: 5px;
 			}
 		</style>
 	</head>
@@ -34,19 +73,104 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<div class="heading">Michael Henretty</div>
+					<div class="mytitle">Michael Henretty</div>
 					<sub>Coding Case Study</sub>
 				</section>
 				<section>
 					<div class="normal">
-						<div>Prompt</div>
-						<div>to present the business challenge/ask, what you worked on, how you + the team accomplished your goals, all while focusing on the FS/UI components</div>
+						<div class="heading">Prompt</div>
+						<div class="quote">
+							"...to present<br />
+							<br />
+							the business challenge/ask,<br />
+							what you worked on,<br />
+							how you + the team accomplished your goals,<br />
+							<br />
+							all while focusing on the FS/UI components..."
+						</div>
 					</div>
+				</section>
+				<section>
+						<ul>
+							<li class="top">My Goals</li>
+							<li><b>Communicate</b> my engineering principles</li>
+							<li><b>Demonstrate</b> how I evaluate technologies</li>
+							<li><b>Explain</b> my architectural approach</li>
+							<li><b>Encourage </b> feedback/discussion</li>
+						</ul>
+				</section>
+				<section>
+					<div class="normal">
+						<div class="heading">Project: Icebreak</div>
+						<p>
+							<b>Inspiration:</b> Remote companies often use video chat “breakout”
+							rooms with a “prompt” to encourage rapport building among physically disparate employees.
+						</p>
+					</div>
+				</section>
+				<section>
+					<div class="normal">
+						<div class="heading">Project: Icebreak</div>
+						<p>
+							<b>Problem:</b> It can be awkward to get started, or know when to talk.
+							Also not everyone feels comfortable participating.
+						</p>
+					</div>
+				</section>
+				<section>
+					<div class="normal">
+						<div class="heading">Project: Icebreak</div>
+						<p>
+							<b>Idea:</b> <i>How might I create a simple web game to help facilitate these “ice-breakers?”</i>
+						</p>
+					</div>
+				</section>
+				<section>
+						<ul>
+							<li class="top">Game Aspirations</li>
+							<li>Low friction to get started</li>
+							<li>No required reading (ie. rules)</li>
+							<li>Can be played in a few minutes</li>
+							<li>Facilitates rather than replaces conversation</li>
+						</ul>
 				</section>
 				<section>
 						<video controls onloadstart="this.playbackRate = 2.5">
 							<source src="static/icebreak-demo.webm" type="video/webm" />
 						</video>
+				</section>
+				<section>
+					<ul>
+						<li class="top">Foundation</li>
+						<li><b>Environment:</b> Docker 20</li>
+						<li style="margin-top: 20px"><b>Build:</b> Yarn 1.22, TypeScript 4.6, ESLint 8</li>
+						<li><b>Front-end:</b> React 18, Webpack 5</li>
+						<li><b>Back-end:</b> Node v18, Express 4, Postgres 14</li>
+					</ul>
+				</section>
+				<section>
+					<ul>
+						<li class="top">Agenda</li>
+						<li>Client synchronization</li>
+						<li>Database management</li>
+						<li>Dev setup</li>
+					</ul>
+				</section>
+				<section>
+					<div class="mytitle">Client Sync</div>
+				</section>
+				<section>
+					<img style="display: inline-block; height:600px" src="static/Icebreak-arch.png" />
+				</section>
+				<section>
+					<ul>
+						<li class="top">Why Server-sent Events?</li>
+						<li>Lightweight and simple <span class="small">(uses HTTP socket)</span></li>
+						<li>No additional configuration <span class="small">(à la websockets)</span></li>
+						<li>No session signaling <span class="small">(à la WebRTC)</span></li>
+						<li>Full browser support <span class="small">(except IE 11)</span></li>
+						<li>Don't need full duplex <span class="small">(push is enough)</span></li>
+					</ul>
 				</section>
 			</div>
 		</div>
