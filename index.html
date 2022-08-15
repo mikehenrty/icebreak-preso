@@ -159,12 +159,11 @@
 					</ul>
 				</section>
 				<section>
-					<ul>
-						<li class="top">In Focus Today</li>
+					<div class="heading" style="text-align: center;">Let's Take A Deeper Look</div>
+					<ol start="1">
 						<li>Client synchronization</li>
 						<li>Database management</li>
-						<li>Dev setup</li>
-					</ul>
+					</ol>
 				</section>
 				<section>
 					<div class="mytitle">Client Sync</div>
@@ -178,7 +177,7 @@
 				<section>
 					<ul>
 						<li class="top">Why Server-sent Events?</li>
-						<li>Lightweight and simple <span class="small">(uses HTTP socket)</span></li>
+						<li>Lightweight and simple <span class="small">(uses HTTP)</span></li>
 						<li>No additional configuration <span class="small">(à la websockets)</span></li>
 						<li>No session signaling <span class="small">(à la WebRTC)</span></li>
 						<li>Full browser support <span class="small">(except IE 11)</span></li>
@@ -300,7 +299,7 @@ function sendRoomUpdate(room: RoomEntity) {
 							<li class="top">DB Problems</li>
 							<li>Schemas are entropic</li>
 							<li>Migrations are tricky</li>
-							<li>Security is crucial</li>
+							<li>Security is critical</li>
 							<li>DBA is a full-time job</li>
 						</ul>
 						<img style="border-radius: 10px; display: inline-block; width:40%; margin-left: 80px" src="static/Icebreak-schema.png" />
@@ -320,18 +319,24 @@ function sendRoomUpdate(room: RoomEntity) {
 							<li class="top" style="font-size: 120%; margin-bottom: 15px; color: rgb(228, 52, 52)">Cons</li>
 							<li><b>Performance!</b></li>
 							<li>Entities and Schema syncing</li>
-							<li>How to complex queries?</li>
+							<li>How to do complex queries?</li>
 						</ul>
 					</div>
 				</section>
 				<section>
-					<div class="heading">What I wanted:</div>
 					<ul>
+						<li class="top">What I want</li>
 						<li>Typed Entities</li>
 						<li>No writing migration scripts by hand</li>
 						<li>No manual syncing entities with schema</li>
 					</ul>
-					<div style="text-align: left; margin-top: 30px"><b>I want to define schema once, and let ORM handle entities and migrations</b></div>
+				</section>
+				<section>
+					<div style="text-align: left; margin-top: 30px">
+						<b>I want to define schema once, <br />
+							let ORM handle entities and migrations
+						</b>
+					</div>
 				</section>
 				<section>
 					<ul>
@@ -361,12 +366,20 @@ function sendRoomUpdate(room: RoomEntity) {
 					</ul>
 				</section>
 				<section>
-					<video controls onloadstart="this.playbackRate = 1.5">
+					<video controls onloadstart="this.playbackRate = 1.3">
 						<source src="static/migrations.webm" type="video/webm" />
 					</video>
 				</section>
 				<section>
-					<div class="mytitle">THE END</div>
+					<ul>
+						<li class="top">My Principles</li>
+						<li>Keep it simple</li>
+						<li>Embrace the types</li>
+						<li>Fast developer loop</li>
+					</ul>
+				</section>
+				<section>
+					<div class="mytitle">QUESTIONS?</div>
 				</section>
 			</div>
 		</div>
