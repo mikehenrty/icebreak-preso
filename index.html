@@ -51,6 +51,14 @@
 				justify-content: space-evenly;
 			}
 
+			.holder {
+				border: 1px solid rgb(53, 53, 53);
+				border-radius: 20px;
+				background-color: rgba(255, 255, 255, 0.935);
+				margin: 10px 0;
+				padding: 60px 30px;
+			}
+
 			.quote {
 				border: 1px solid black;
 				border-radius: 20px;
@@ -100,7 +108,8 @@
 						</div>
 					</div>
 				</section>
-				<section>
+				<section data-background-image="static/engineer-brain.png" data-background-opacity="0.5">
+					<div class="holder">
 						<ul>
 							<li class="top">My Goals</li>
 							<li><b>Communicate</b> my engineering principles</li>
@@ -108,6 +117,7 @@
 							<li><b>Explain</b> my architectural approach</li>
 							<li><b>Encourage </b> feedback/discussion</li>
 						</ul>
+					</div>
 				</section>
 				<section>
 					<div class="normal">
@@ -135,7 +145,8 @@
 						</p>
 					</div>
 				</section>
-				<section>
+				<section data-background-image="static/friends.png" data-background-opacity="0.5">
+					<div class="holder">
 						<ul>
 							<li class="top">Game Aspirations</li>
 							<li>Low friction to get started</li>
@@ -143,6 +154,7 @@
 							<li>Can be played in a few minutes</li>
 							<li>Facilitates rather than replaces conversation</li>
 						</ul>
+					</div>
 				</section>
 				<section>
 						<video controls onloadstart="this.playbackRate = 2.5">
@@ -323,18 +335,20 @@ function sendRoomUpdate(room: RoomEntity) {
 						</ul>
 					</div>
 				</section>
-				<section>
-					<ul>
-						<li class="top">What I want</li>
-						<li>Typed Entities</li>
-						<li>No writing migration scripts by hand</li>
-						<li>No manual syncing entities with schema</li>
-					</ul>
+				<section data-background-image="static/thinking.png" data-background-opacity="0.5">
+					<div class="holder">
+						<ul>
+							<li class="top">What I want</li>
+							<li>Typed Entities</li>
+							<li>No writing migration scripts by hand</li>
+							<li>No manual syncing entities with schema</li>
+						</ul>
+					</div>
 				</section>
-				<section>
-					<div style="text-align: left; margin-top: 30px">
+				<section data-background-image="static/thinking.png" data-background-opacity="0.5">
+					<div class="holder" style="text-align: left">
 						<b>I want to define schema once, <br />
-							let ORM handle entities and migrations
+							let ORM manage Entities, DB, migrations
 						</b>
 					</div>
 				</section>
@@ -370,13 +384,15 @@ function sendRoomUpdate(room: RoomEntity) {
 						<source src="static/migrations.webm" type="video/webm" />
 					</video>
 				</section>
-				<section>
-					<ul>
-						<li class="top">My Principles</li>
-						<li>Keep it simple</li>
-						<li>Embrace the types</li>
-						<li>Fast developer loop</li>
-					</ul>
+				<section data-background-image="static/boxes.png" data-background-opacity="0.5">
+					<div class="holder">
+						<ul>
+							<li class="top">My Principles</li>
+							<li>Keep it simple</li>
+							<li>Embrace the types</li>
+							<li>Fast developer loop</li>
+						</ul>
+					</div>
 				</section>
 				<section>
 					<div class="mytitle">QUESTIONS?</div>
