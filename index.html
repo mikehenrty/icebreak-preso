@@ -41,6 +41,16 @@
 				font-size: 50%;
 			}
 
+			.smaller {
+				font-size: 50%;
+			}
+
+			.double {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-evenly;
+			}
+
 			.quote {
 				border: 1px solid black;
 				border-radius: 20px;
@@ -150,7 +160,7 @@
 				</section>
 				<section>
 					<ul>
-						<li class="top">Agenda</li>
+						<li class="top">In Focus Today</li>
 						<li>Client synchronization</li>
 						<li>Database management</li>
 						<li>Dev setup</li>
@@ -160,10 +170,10 @@
 					<div class="mytitle">Client Sync</div>
 				</section>
 				<section>
-					<img style="display: inline-block; height:600px" src="static/Icebreak-arch.png" />
+					<img style="display: inline-block; height:600px" src="static/react-arch.png" />
 				</section>
 				<section>
-					<img style="display: inline-block; height:600px" src="static/react-arch.png" />
+					<img style="display: inline-block; height:600px" src="static/Icebreak-arch.png" />
 				</section>
 				<section>
 					<ul>
@@ -174,47 +184,6 @@
 						<li>Full browser support <span class="small">(except IE 11)</span></li>
 						<li>Don't need full duplex <span class="small">(push is enough)</span></li>
 					</ul>
-				</section>
-				<section>
-					<div class="heading">Back-end</div>
-					<pre class="typescript">
-						<code data-line-numbers="1-6|9-20|23-32">
-							<script type="text/template">// Ex. server.ts
-type Clients = Map<ClientId, ExpressResponse>;
-type Rooms = Map<RoomId, Clients>;
-
-const rooms: Rooms = new Map();
-const app = express();
-
-
-// Middleware handler for joining a room.
-app.get('/join/:roomId', (req, res) => {
-	const {roomId, clientId} = getParams(req);
-
-	let room = rooms.get(roomId);
-  if (!room) {
-    room = new Map();
-    rooms.set(roomId, room);
-  }
-
-  room.set(clientId, res);
-});
-
-
-// Called every time we update Room data.
-function sendRoomUpdate(room: RoomEntity) {
-	const clients = rooms.get(room.id);
-
-	// Send room data to every client in room.
-	for (let [roomId, res] of clients) {
-		const update = getSSEStr(room);
-		res.write(update);
-	}
-}
-
-						</script>
-					</code>
-				</pre>
 				</section>
 				<section>
 					<div class="heading">Front-end</div>
@@ -234,8 +203,8 @@ function useRoomData(roomId: string): HookResult<Room> {
 	
 	React.useEffect(() => {
 		setIsLoading(true);
-		const evtSource = new EventSource(`/join/${roomId}`);
-		evtSource.addEventListener('update', (evt: MessageEvent) => {
+		const sse = new EventSource(`/join/${roomId}`);
+		sse.addEventListener('update', (evt: MessageEvent) => {
 			setError(null);
 			setIsLoading(false);
 			try {
@@ -279,7 +248,120 @@ const Room = ({ user, roomId }: RoomProps) => {
 					</pre>
 				</section>
 				<section>
+					<div class="heading">Back-end</div>
+					<pre class="typescript">
+						<code data-line-numbers="1-6|9-20|23-32">
+							<script type="text/template">// Ex. server.ts
+type Clients = Map<ClientId, ExpressResponse>;
+type Rooms = Map<RoomId, Clients>;
+
+const rooms: Rooms = new Map();
+const app = express();
+
+
+// Middleware handler for joining a room.
+app.get('/join/:roomId', (req, res) => {
+	const {roomId, clientId} = getParams(req);
+
+	let room = rooms.get(roomId);
+  if (!room) {
+    room = new Map();
+    rooms.set(roomId, room);
+  }
+
+  room.set(clientId, res);
+});
+
+
+// Called every time we update Room data.
+function sendRoomUpdate(room: RoomEntity) {
+	const clients = rooms.get(room.id);
+
+	// Send room data to every client in room.
+	for (let [roomId, res] of clients) {
+		const roomData = getSSERoomData(room);
+		res.write(roomData);
+	}
+}
+
+						</script>
+					</code>
+				</pre>
+				</section>
+				<section>
 					<img style="display: inline-block; height:600px" src="static/Icebreak-arch.png" />
+				</section>
+				<section>
+					<div class="mytitle">Database Management</div>
+				</section>
+				<section style>
+					<div class="double">
+						<ul>
+							<li class="top">DB Problems</li>
+							<li>Schemas are entropic</li>
+							<li>Migrations are tricky</li>
+							<li>Security is crucial</li>
+							<li>DBA is a full-time job</li>
+						</ul>
+						<img style="border-radius: 10px; display: inline-block; width:40%; margin-left: 80px" src="static/Icebreak-schema.png" />
+					</div>
+				</section>
+				<section>
+					<div class="heading" style="text-align: center;">Are ORMs the solution?</div>
+					<div class="double">
+						<ul>
+							<li class="top" style="font-size: 120%; margin-bottom: 15px; color: rgb(0, 192, 0)">Pros</li>
+							<li>OOP for CRUD</li>
+							<li>Security built-in</li>
+							<li>Feature rich:
+							<li style="font-size: 50%; list-style: none;">prepared statements, connection pooling, transactions, etc.</li>
+						</ul>
+						<ul>
+							<li class="top" style="font-size: 120%; margin-bottom: 15px; color: rgb(228, 52, 52)">Cons</li>
+							<li><b>Performance!</b></li>
+							<li>Entities and Schema syncing</li>
+							<li>How to complex queries?</li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<div class="heading">What I wanted:</div>
+					<ul>
+						<li>Typed Entities</li>
+						<li>No writing migration scripts by hand</li>
+						<li>No manual syncing entities with schema</li>
+					</ul>
+					<div style="text-align: left; margin-top: 30px"><b>I want to define schema once, and let ORM handle entities and migrations</b></div>
+				</section>
+				<section>
+					<ul>
+						<li class="top">Top JavaScript ORMs</li>
+						<li>Sequelize (2010) - 5 million monthly downloads</li>
+						<ul class="smaller">
+							<li>TypeScript support still WIP</li>
+							<li>Have to manually write migrations</li>
+						</ul>
+						<li>Knex.js (2012) - 5 million monthly downloads</li>
+						<ul class="smaller">
+							<li>“TypeScript support is currently best-effort”</li>
+							<li>Have to manually write migrations</li>
+						</ul>
+						<li>Prisma (2019) - 2 million monthly downloads</li>
+						<ul class="smaller">
+							<li>Uses DSL to define Schema</li>
+							<li>Can auto-generate both migrations and entities</li>
+							<li>PAAS model, some features behind paywall</li>
+						</ul>
+						<li><b>TypeORM (2016) - 4 million monthly</b></li>
+						<ul class="smaller">
+							<li><i>Entities are schema using decorators</i></li>
+							<li>Auto-generate migrations</li>
+							<li>Still in beta after 6 years</li>
+						</ul>
+					</ul>
+				</section>
+				<section>
+					<div class="mytitle">THE END</div>
 				</section>
 			</div>
 		</div>
