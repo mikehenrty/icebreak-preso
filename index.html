@@ -223,7 +223,7 @@
 							<script type="text/template">// Ex. hooks.ts
 type HookResult<T> = [
 	boolean, // isLoading
-	string,  // errorMessage
+	string | null,  // errorMessage
 	T | null // apiResponse
 ];
 
