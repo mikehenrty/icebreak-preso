@@ -310,7 +310,7 @@ function sendRoomUpdate(room: RoomEntity) {
 	const clients = rooms.get(room.id);
 
 	// Send room data to every client in room.
-	for (let [roomId, res] of clients) {
+	for (let [clientId, res] of clients) {
 		const roomData = getSSERoomData(room);
 		res.write(roomData);
 	}
